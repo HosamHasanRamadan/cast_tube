@@ -43,6 +43,8 @@ android {
     }
 
     defaultConfig {
+        // TODO: remove it later and use `--mulitdex` flag `flutter run --multidex`
+        multiDexEnabled true
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.casttube.cast_tube"
         // You can update the following values to match your application needs.
@@ -68,4 +70,11 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    
+    def exoplayer_version = "r2.18.0"
+    implementation "com.google.android.exoplayer:exoplayer-core:$exoplayer_version"
+    implementation "com.google.android.exoplayer:exoplayer-dash:$exoplayer_version"
+    implementation "com.google.android.exoplayer:exoplayer-hls:$exoplayer_version"
+    implementation "com.google.android.exoplayer:exoplayer-smoothstreaming:$exoplayer_version"
+
 }
