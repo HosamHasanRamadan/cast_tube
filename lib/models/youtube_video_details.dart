@@ -11,6 +11,7 @@ class YoutubeVideoDetails with _$YoutubeVideoDetails {
     required Uri audioStreamUrl,
     required Uri thumbnailUrl,
     required String title,
+    Duration? duration,
   }) = _YoutubeVideoDetails;
 
   factory YoutubeVideoDetails.fromJson(Map<String, dynamic> json) => _$YoutubeVideoDetailsFromJson(json);

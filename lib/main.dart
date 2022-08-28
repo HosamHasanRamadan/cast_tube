@@ -12,8 +12,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:just_audio_background/just_audio_background.dart';
-
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
+import 'package:youtube_parser/youtube_parser.dart';
+import 'package:cast_tube/extensions/extensions.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,6 +24,7 @@ void main() async {
     androidNotificationChannelId: 'com.ryanheise.bg_demo.channel.audio',
     androidNotificationChannelName: 'Audio playback',
     androidNotificationOngoing: true,
+    androidStopForegroundOnPause: true,
   );
 
   final box = await Hive.openBox<Map>('tracks');
@@ -62,23 +64,31 @@ class MyHomePage extends StatefulHookConsumerWidget {
 }
 
 class _MyHomePageState extends ConsumerState<MyHomePage> {
-  bool loading = false;
-  final controller = TextEditingController();
   AudioPlayer get player => ref.read(audioPlayerProvider);
 
+  bool loading = false;
+  final controller = TextEditingController();
   bool isFetching = false;
 
   @override
   void initState() {
-    ref.read(playbackState);
     super.initState();
+    ref.listenOnce<AsyncValue<String?>>(
+      receiveIntentProvider,
+      (previous, next) {
+        final value = next.valueOrNull;
+        if (value.isNotNull && getIdFromUrl(value!).isNotNull) {
+          controller.text = value;
+          fetchTrack();
+        }
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(),
         body: Center(
           child: Padding(
             padding: EdgeInsets.all(16),
@@ -139,6 +149,18 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
   }
 
   Future<void> fetchTrack() async {
+    void showInvalidUrlSnackBar() {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Invalid Url'),
+        ),
+      );
+    }
+
+    if (controller.text.isEmpty || getIdFromUrl(controller.text) == null) {
+      showInvalidUrlSnackBar();
+      return;
+    }
     setState(() {
       isFetching = true;
     });
@@ -162,6 +184,8 @@ class AudioPlayerCard extends ConsumerWidget {
     final player = ref.watch(audioPlayerProvider);
     final duration = ref.watch(currentTrackTimePosition).valueOrNull;
     final selectedTrack = ref.watch(selectedTrackProvider);
+    final playbackState = ref.watch(playbackStateProvider).valueOrNull;
+
     return Card(
       elevation: 4.0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
@@ -212,19 +236,39 @@ class AudioPlayerCard extends ConsumerWidget {
                 ),
               ],
             ),
-            Slider(
-              min: 0,
-              max: player.duration?.inSeconds.toDouble() ?? 1,
-              value: duration?.inSeconds.toDouble() ?? 0.0,
-              onChangeEnd: (value) {
-                player.play();
-              },
-              onChangeStart: (value) {
-                player.pause();
-              },
-              onChanged: (value) {
-                player.seek(Duration(seconds: value.toInt()));
-              },
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Slider(
+                  min: 0,
+                  max: player.duration?.inSeconds.toDouble() ?? 1,
+                  value: duration?.inSeconds.toDouble() ?? 0.0,
+                  onChangeEnd: (value) {
+                    player.play();
+                  },
+                  onChangeStart: (value) {
+                    player.pause();
+                  },
+                  onChanged: (value) {
+                    player.seek(Duration(seconds: value.toInt()));
+                  },
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 18.0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        playbackState?.updatePosition == null ? '--:--' : duration!.hhmmss,
+                      ),
+                      Spacer(),
+                      Text(
+                        playbackState?.duration == null ? '--:--' : selectedTrack!.duration!.hhmmss,
+                      ),
+                    ],
+                  ),
+                )
+              ],
             ),
           ],
         ),
@@ -304,6 +348,7 @@ class YouTubePlayer {
       thumbnailUrl: video.thumbnails.mediumResUrl.url,
       title: video.title,
       url: newVideoUrl.url,
+      duration: video.duration,
     );
 
     _tracksStorageHistory.put(newTrack.url.toString(), newTrack.toJson());

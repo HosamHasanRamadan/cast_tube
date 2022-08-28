@@ -47,6 +47,8 @@ dependencies:
   collection: ^1.16.0
   tuple: ^2.0.0
   just_audio_background: ^0.0.1-beta.7
+  share_handler: ^0.0.16
+  youtube_parser: ^2.0.0
 
 dev_dependencies:
   flutter_test:

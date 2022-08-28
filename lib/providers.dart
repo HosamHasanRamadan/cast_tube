@@ -1,11 +1,9 @@
-import 'dart:async';
 import 'dart:collection';
-
 import 'package:cast_tube/models/youtube_video_details.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:share_handler/share_handler.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 final audioPlayerProvider = Provider((ref) {
@@ -25,10 +23,7 @@ final playingState = StreamProvider((ref) {
   return ref.watch(audioPlayerProvider.select((value) => value.processingStateStream));
 });
 
-final playbackState = StreamProvider((ref) {
-  ref.listenSelf((previous, next) {
-    print(next);
-  });
+final playbackStateProvider = StreamProvider((ref) {
   return ref.watch(audioPlayerProvider.select((value) => value.playbackEventStream));
 });
 
@@ -49,3 +44,10 @@ final currentTrackTimePosition = StreamProvider((ref) {
 final selectedTrackProvider = StateProvider<YoutubeVideoDetails?>((ref) => null);
 
 final youtubeProvider = Provider((ref) => YoutubeExplode());
+
+final receiveIntentProvider = StreamProvider<String?>((ref) async* {
+  final handler = ShareHandlerPlatform.instance;
+  final initialValue = await handler.getInitialSharedMedia();
+  yield initialValue?.content;
+  yield* handler.sharedMediaStream.map((event) => event.content);
+});

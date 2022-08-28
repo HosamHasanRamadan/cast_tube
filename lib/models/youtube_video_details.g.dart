@@ -13,6 +13,9 @@ _$_YoutubeVideoDetails _$$_YoutubeVideoDetailsFromJson(
       audioStreamUrl: Uri.parse(json['audioStreamUrl'] as String),
       thumbnailUrl: Uri.parse(json['thumbnailUrl'] as String),
       title: json['title'] as String,
+      duration: json['duration'] == null
+          ? null
+          : Duration(microseconds: json['duration'] as int),
     );
 
 Map<String, dynamic> _$$_YoutubeVideoDetailsToJson(
@@ -22,4 +25,5 @@ Map<String, dynamic> _$$_YoutubeVideoDetailsToJson(
       'audioStreamUrl': instance.audioStreamUrl.toString(),
       'thumbnailUrl': instance.thumbnailUrl.toString(),
       'title': instance.title,
+      'duration': instance.duration?.inMicroseconds,
     };

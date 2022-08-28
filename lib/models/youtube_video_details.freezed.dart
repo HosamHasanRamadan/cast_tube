@@ -24,6 +24,7 @@ mixin _$YoutubeVideoDetails {
   Uri get audioStreamUrl => throw _privateConstructorUsedError;
   Uri get thumbnailUrl => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
+  Duration? get duration => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,7 +37,12 @@ abstract class $YoutubeVideoDetailsCopyWith<$Res> {
   factory $YoutubeVideoDetailsCopyWith(
           YoutubeVideoDetails value, $Res Function(YoutubeVideoDetails) then) =
       _$YoutubeVideoDetailsCopyWithImpl<$Res>;
-  $Res call({Uri url, Uri audioStreamUrl, Uri thumbnailUrl, String title});
+  $Res call(
+      {Uri url,
+      Uri audioStreamUrl,
+      Uri thumbnailUrl,
+      String title,
+      Duration? duration});
 }
 
 /// @nodoc
@@ -54,6 +60,7 @@ class _$YoutubeVideoDetailsCopyWithImpl<$Res>
     Object? audioStreamUrl = freezed,
     Object? thumbnailUrl = freezed,
     Object? title = freezed,
+    Object? duration = freezed,
   }) {
     return _then(_value.copyWith(
       url: url == freezed
@@ -72,6 +79,10 @@ class _$YoutubeVideoDetailsCopyWithImpl<$Res>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
+      duration: duration == freezed
+          ? _value.duration
+          : duration // ignore: cast_nullable_to_non_nullable
+              as Duration?,
     ));
   }
 }
@@ -83,7 +94,12 @@ abstract class _$$_YoutubeVideoDetailsCopyWith<$Res>
           $Res Function(_$_YoutubeVideoDetails) then) =
       __$$_YoutubeVideoDetailsCopyWithImpl<$Res>;
   @override
-  $Res call({Uri url, Uri audioStreamUrl, Uri thumbnailUrl, String title});
+  $Res call(
+      {Uri url,
+      Uri audioStreamUrl,
+      Uri thumbnailUrl,
+      String title,
+      Duration? duration});
 }
 
 /// @nodoc
@@ -103,6 +119,7 @@ class __$$_YoutubeVideoDetailsCopyWithImpl<$Res>
     Object? audioStreamUrl = freezed,
     Object? thumbnailUrl = freezed,
     Object? title = freezed,
+    Object? duration = freezed,
   }) {
     return _then(_$_YoutubeVideoDetails(
       url: url == freezed
@@ -121,6 +138,10 @@ class __$$_YoutubeVideoDetailsCopyWithImpl<$Res>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
+      duration: duration == freezed
+          ? _value.duration
+          : duration // ignore: cast_nullable_to_non_nullable
+              as Duration?,
     ));
   }
 }
@@ -132,7 +153,8 @@ class _$_YoutubeVideoDetails implements _YoutubeVideoDetails {
       {required this.url,
       required this.audioStreamUrl,
       required this.thumbnailUrl,
-      required this.title});
+      required this.title,
+      this.duration});
 
   factory _$_YoutubeVideoDetails.fromJson(Map<String, dynamic> json) =>
       _$$_YoutubeVideoDetailsFromJson(json);
@@ -145,10 +167,12 @@ class _$_YoutubeVideoDetails implements _YoutubeVideoDetails {
   final Uri thumbnailUrl;
   @override
   final String title;
+  @override
+  final Duration? duration;
 
   @override
   String toString() {
-    return 'YoutubeVideoDetails(url: $url, audioStreamUrl: $audioStreamUrl, thumbnailUrl: $thumbnailUrl, title: $title)';
+    return 'YoutubeVideoDetails(url: $url, audioStreamUrl: $audioStreamUrl, thumbnailUrl: $thumbnailUrl, title: $title, duration: $duration)';
   }
 
   @override
@@ -161,7 +185,8 @@ class _$_YoutubeVideoDetails implements _YoutubeVideoDetails {
                 .equals(other.audioStreamUrl, audioStreamUrl) &&
             const DeepCollectionEquality()
                 .equals(other.thumbnailUrl, thumbnailUrl) &&
-            const DeepCollectionEquality().equals(other.title, title));
+            const DeepCollectionEquality().equals(other.title, title) &&
+            const DeepCollectionEquality().equals(other.duration, duration));
   }
 
   @JsonKey(ignore: true)
@@ -171,7 +196,8 @@ class _$_YoutubeVideoDetails implements _YoutubeVideoDetails {
       const DeepCollectionEquality().hash(url),
       const DeepCollectionEquality().hash(audioStreamUrl),
       const DeepCollectionEquality().hash(thumbnailUrl),
-      const DeepCollectionEquality().hash(title));
+      const DeepCollectionEquality().hash(title),
+      const DeepCollectionEquality().hash(duration));
 
   @JsonKey(ignore: true)
   @override
@@ -192,7 +218,8 @@ abstract class _YoutubeVideoDetails implements YoutubeVideoDetails {
       {required final Uri url,
       required final Uri audioStreamUrl,
       required final Uri thumbnailUrl,
-      required final String title}) = _$_YoutubeVideoDetails;
+      required final String title,
+      final Duration? duration}) = _$_YoutubeVideoDetails;
 
   factory _YoutubeVideoDetails.fromJson(Map<String, dynamic> json) =
       _$_YoutubeVideoDetails.fromJson;
@@ -205,6 +232,8 @@ abstract class _YoutubeVideoDetails implements YoutubeVideoDetails {
   Uri get thumbnailUrl;
   @override
   String get title;
+  @override
+  Duration? get duration;
   @override
   @JsonKey(ignore: true)
   _$$_YoutubeVideoDetailsCopyWith<_$_YoutubeVideoDetails> get copyWith =>
