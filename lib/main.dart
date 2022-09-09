@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cast_tube/models/youtube_track_details.dart';
 import 'package:cast_tube/providers.dart';
 import 'package:flutter/foundation.dart';
@@ -205,8 +206,10 @@ class AudioPlayerCard extends ConsumerWidget {
               children: [
                 if (selectedTrack != null) ...[
                   Expanded(
-                    child: Image.network(
-                      selectedTrack.thumbnailUrl.toString(),
+                    child: Image(
+                      image: CachedNetworkImageProvider(
+                        selectedTrack.thumbnailUrl.toString(),
+                      ),
                     ),
                   ),
                   Gap(20)
@@ -303,8 +306,10 @@ class _TrackTileState extends State<TrackTile> {
     final track = widget.youtubeVideoDetails;
 
     return ListTile(
-      leading: Image.network(
-        track.thumbnailUrl.toString(),
+      leading: Image(
+        image: CachedNetworkImageProvider(
+          track.thumbnailUrl.toString(),
+        ),
       ),
       title: Text(
         track.title,
