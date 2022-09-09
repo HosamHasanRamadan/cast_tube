@@ -1,10 +1,16 @@
 import 'dart:collection';
-import 'package:cast_tube/models/youtube_video_details.dart';
+import 'package:cast_tube/main.dart';
+import 'package:cast_tube/models/youtube_track_details.dart';
+import 'package:cast_tube/utils/logger.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:hive_flutter/hive_flutter.dart';
+import 'package:isar/isar.dart';
+
 import 'package:just_audio/just_audio.dart';
 import 'package:share_handler/share_handler.dart';
+import 'package:universal_platform/universal_platform.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
+
+final isarDbProvider = Provider<Isar>((_) => throw UnimplementedError('Needs to be overridden'));
 
 final audioPlayerProvider = Provider((ref) {
   final audioPlayer = AudioPlayer();
@@ -14,11 +20,9 @@ final audioPlayerProvider = Provider((ref) {
   return audioPlayer;
 });
 
-final loadedTracksBox = Provider<Box<Map>>((ref) => throw UnimplementedError());
-
 final playingState = StreamProvider((ref) {
   ref.listenSelf((previous, next) {
-    print(next);
+    Logger.log(message: next.toString());
   });
   return ref.watch(audioPlayerProvider.select((value) => value.processingStateStream));
 });
@@ -27,27 +31,39 @@ final playbackStateProvider = StreamProvider((ref) {
   return ref.watch(audioPlayerProvider.select((value) => value.playbackEventStream));
 });
 
-final _boxChanges = StreamProvider((ref) {
-  return ref.watch(loadedTracksBox).watch();
-});
-final tracksListProvider = Provider<UnmodifiableListView<YoutubeVideoDetails>>((ref) {
-  ref.watch(_boxChanges);
-  final newValues = ref.watch(loadedTracksBox).values;
+final tracksListProvider = Provider<UnmodifiableListView<YoutubeTrackDetails>>((ref) {
+  final db = ref.watch(isarDbProvider);
+  final query = db.youtubeTrackDetailss.where().sortByCreatedAtDesc();
+  final sub = query.watchLazy().listen((event) {
+    ref.invalidateSelf();
+  });
+  ref.onDispose(() {
+    sub.cancel();
+  });
 
-  return UnmodifiableListView(newValues.map((e) => YoutubeVideoDetails.fromJson(e.cast<String, dynamic>())));
+  return UnmodifiableListView(query.findAllSync());
 });
 
 final currentTrackTimePosition = StreamProvider((ref) {
   return ref.watch(audioPlayerProvider.select((value) => value.positionStream));
 });
 
-final selectedTrackProvider = StateProvider<YoutubeVideoDetails?>((ref) => null);
+final selectedTrackProvider = StateProvider<YoutubeTrackDetails?>((ref) => null);
 
 final youtubeProvider = Provider((ref) => YoutubeExplode());
 
 final receiveIntentProvider = StreamProvider<String?>((ref) async* {
+  if (UniversalPlatform.isAndroid == false || UniversalPlatform.isIOS == false) {
+    yield null;
+    return;
+  }
+
   final handler = ShareHandlerPlatform.instance;
   final initialValue = await handler.getInitialSharedMedia();
   yield initialValue?.content;
   yield* handler.sharedMediaStream.map((event) => event.content);
+});
+
+final youtubePlayerProvider = Provider((ref) {
+  return YouTubePlayer(ref.read);
 });
