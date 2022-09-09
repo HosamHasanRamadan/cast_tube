@@ -1,36 +1,31 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers
 
 import 'dart:async';
-import 'package:cast_tube/utils/logger.dart';
+import 'dart:developer' as dev;
 
-extension ObjectX on Object? {
-  bool get isNull => this == null;
-  bool get isNotNull => this != null;
-
-  void log({
+abstract class Logger {
+  static void log({
     String? message,
     DateTime? time,
     int? sequenceNumber,
-    int? level,
+    int level = 0,
     String? name,
     Zone? zone,
     Object? error,
     StackTrace? stackTrace,
     bool isRich = false,
   }) {
-    final _name = name ?? runtimeType.toString();
     final _stackTrace = isRich ? stackTrace ?? StackTrace.current : null;
     final _zone = isRich ? zone ?? Zone.current : null;
 
-    Logger.log(
-      message: message ?? 'None',
+    dev.log(
+      message ?? 'None',
       time: DateTime.now(),
       sequenceNumber: sequenceNumber,
-      name: _name,
+      name: name ?? '',
       zone: _zone,
       error: error,
       stackTrace: _stackTrace,
-      isRich: isRich,
     );
   }
 }
