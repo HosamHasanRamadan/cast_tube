@@ -53,11 +53,10 @@ final selectedTrackProvider = StateProvider<YoutubeTrackDetails?>((ref) => null)
 final youtubeProvider = Provider((ref) => YoutubeExplode());
 
 final receiveIntentProvider = StreamProvider<String?>((ref) async* {
-  if (UniversalPlatform.isAndroid == false || UniversalPlatform.isIOS == false) {
+  if (UniversalPlatform.isDesktop || UniversalPlatform.isWeb) {
     yield null;
     return;
   }
-
   final handler = ShareHandlerPlatform.instance;
   final initialValue = await handler.getInitialSharedMedia();
   yield initialValue?.content;
