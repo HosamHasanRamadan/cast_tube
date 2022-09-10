@@ -4,8 +4,8 @@ import 'dart:async';
 import 'dart:developer' as dev;
 
 abstract class Logger {
-  static void log({
-    String? message,
+  static void log(
+    Object? message, {
     DateTime? time,
     int? sequenceNumber,
     int level = 0,
@@ -19,7 +19,7 @@ abstract class Logger {
     final _zone = isRich ? zone ?? Zone.current : null;
 
     dev.log(
-      message ?? 'None',
+      message?.toString() ?? 'None',
       time: DateTime.now(),
       sequenceNumber: sequenceNumber,
       name: name ?? '',

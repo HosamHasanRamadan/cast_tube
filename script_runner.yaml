@@ -1,0 +1,8 @@
+scripts:
+  - name: build-apks
+    description: build android split apks
+    cmd: fvm flutter build apk --split-per-abi
+  - name: print
+    args:
+      - name
+    cmd: echo 'name'

@@ -1,8 +1,15 @@
 import 'dart:async';
+import 'dart:io';
+import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cast_tube/api/telegram_api.dart';
+import 'package:cast_tube/init_app.dart';
 import 'package:cast_tube/models/youtube_track_details.dart';
 import 'package:cast_tube/providers.dart';
+import 'package:cast_tube/utils/logger.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/rendering.dart';
 import 'package:universal_platform/universal_platform.dart';
 import 'package:youtube_parser/youtube_parser.dart';
 import 'package:flutter/material.dart';
@@ -15,16 +22,9 @@ import 'package:path_provider/path_provider.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 import 'package:cast_tube/extensions/extensions.dart';
 
+final key = GlobalKey();
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  await JustAudioBackground.init(
-    androidNotificationChannelId: 'com.ryanheise.bg_demo.channel.audio',
-    androidNotificationChannelName: 'Audio playback',
-    androidNotificationOngoing: true,
-    androidStopForegroundOnPause: true,
-  );
-
+  await initApp();
   String? path;
   if (UniversalPlatform.isWeb == false) path = (await getApplicationSupportDirectory()).path;
 
@@ -35,11 +35,14 @@ void main() async {
   );
 
   runApp(
-    ProviderScope(
-      overrides: [
-        isarDbProvider.overrideWithValue(isar),
-      ],
-      child: const MyApp(),
+    RepaintBoundary(
+      key: key,
+      child: ProviderScope(
+        overrides: [
+          isarDbProvider.overrideWithValue(isar),
+        ],
+        child: const MyApp(),
+      ),
     ),
   );
 }
@@ -146,6 +149,11 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
               ],
             ),
           ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            throw UnsupportedError('Errrror');
+          },
         ),
       ),
     );

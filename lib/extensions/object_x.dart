@@ -23,7 +23,7 @@ extension ObjectX on Object? {
     final _zone = isRich ? zone ?? Zone.current : null;
 
     Logger.log(
-      message: message ?? 'None',
+      this == null ? 'None' : toString(),
       time: DateTime.now(),
       sequenceNumber: sequenceNumber,
       name: _name,

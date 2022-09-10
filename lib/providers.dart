@@ -22,7 +22,7 @@ final audioPlayerProvider = Provider((ref) {
 
 final playingState = StreamProvider((ref) {
   ref.listenSelf((previous, next) {
-    Logger.log(message: next.toString());
+    Logger.log(next.toString());
   });
   return ref.watch(audioPlayerProvider.select((value) => value.processingStateStream));
 });
