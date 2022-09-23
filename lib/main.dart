@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cast_tube/models/youtube_track_details.dart';
 import 'package:cast_tube/providers.dart';
@@ -70,7 +69,6 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
 
   @override
   void initState() {
-    'here'.log();
     super.initState();
     ref.listenOnce<AsyncValue<String?>>(
       receiveIntentProvider,
@@ -90,7 +88,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
       child: Scaffold(
         body: Center(
           child: Padding(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(8),
             child: Column(
               children: <Widget>[
                 Visibility(
@@ -129,12 +127,12 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
                   child: Consumer(
                     builder: (context, ref, child) {
                       final tracks = ref.watch(tracksListProvider);
-                      return ListView(
-                        children: tracks
-                            .map(
-                              (track) => TrackTile(youtubeVideoDetails: track),
-                            )
-                            .toList(),
+                      return ListView.separated(
+                        itemCount: tracks.length,
+                        separatorBuilder: (context, index) => const Gap(5),
+                        itemBuilder: (context, index) {
+                          return TrackTile(youtubeVideoDetails: tracks[index]);
+                        },
                       );
                     },
                   ),
@@ -187,10 +185,9 @@ class AudioPlayerCard extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final player = ref.watch(audioPlayerProvider);
     final selectedTrack = ref.watch(selectedTrackProvider);
-    final playbackState = ref.watch(playbackStateProvider).valueOrNull;
-    final duration = useStream(player.positionStream).data;
+    final currentPosition = useStream(player.positionStream).data;
+    final trackDuration = player.duration;
 
-    playbackState?.updatePosition.log();
     return Card(
       elevation: 4.0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
@@ -223,18 +220,42 @@ class AudioPlayerCard extends HookConsumerWidget {
                         children: [
                           IconButton(
                             onPressed: () {
-                              ref.read(audioPlayerProvider).play();
+                              if (currentPosition == null) return;
+                              var seekValue = currentPosition - const Duration(seconds: 10);
+                              if (seekValue <= Duration.zero) seekValue = Duration.zero;
+                              ref.read(audioPlayerProvider).seek(seekValue);
                             },
                             icon: const Icon(
-                              Icons.play_arrow,
+                              Icons.replay_10,
                             ),
                           ),
+                          if (!player.playing)
+                            IconButton(
+                              onPressed: () {
+                                ref.read(audioPlayerProvider).play();
+                              },
+                              icon: const Icon(
+                                Icons.play_arrow,
+                              ),
+                            ),
+                          if (player.playing)
+                            IconButton(
+                              onPressed: () {
+                                ref.read(audioPlayerProvider).pause();
+                              },
+                              icon: const Icon(
+                                Icons.pause,
+                              ),
+                            ),
                           IconButton(
                             onPressed: () {
-                              ref.read(audioPlayerProvider).pause();
+                              if (currentPosition == null || player.duration == null) return;
+                              var seekValue = currentPosition + const Duration(seconds: 10);
+                              if (seekValue >= player.duration!) seekValue = player.duration!;
+                              ref.read(audioPlayerProvider).seek(seekValue);
                             },
                             icon: const Icon(
-                              Icons.pause,
+                              Icons.forward_10,
                             ),
                           ),
                         ],
@@ -250,13 +271,7 @@ class AudioPlayerCard extends HookConsumerWidget {
                 Slider(
                   min: 0,
                   max: player.duration?.inSeconds.toDouble() ?? 1,
-                  value: duration?.inSeconds.toDouble() ?? 0.0,
-                  onChangeEnd: (value) {
-                    player.play();
-                  },
-                  onChangeStart: (value) {
-                    player.pause();
-                  },
+                  value: currentPosition?.inSeconds.toDouble() ?? 0.0,
                   onChanged: (value) {
                     player.seek(Duration(seconds: value.toInt()));
                   },
@@ -267,11 +282,11 @@ class AudioPlayerCard extends HookConsumerWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        playbackState?.updatePosition == null ? '--:--' : playbackState!.updatePosition.hhmmss,
+                        currentPosition == null ? '--:--' : currentPosition.hhmmss,
                       ),
                       const Spacer(),
                       Text(
-                        duration == null ? '--:--' : duration.hhmmss,
+                        trackDuration == null ? '--:--' : trackDuration.hhmmss,
                       ),
                     ],
                   ),
