@@ -41,6 +41,8 @@ extension YoutubeTrackDetailsX on YoutubeTrackDetails {
   }) {
     return YoutubeTrackDetails()
       ..id = id
+      ..trackId = trackId
+      ..url = url ?? this.url
       ..audioStreamUrl = audioStreamUrl ?? this.audioStreamUrl
       ..thumbnailUrl = thumbnailUrl ?? this.thumbnailUrl
       ..title = title ?? this.title

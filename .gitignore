@@ -48,3 +48,14 @@ app.*.map.json
 
 .fvm/
 pubspec.lock
+
+# Firebase Flutterfire config
+android/app/google-services.json
+ios/firebase_app_id_file.json
+ios/Runner/GoogleService-Info.plist
+macos/firebase_app_id_file.json
+macos/Runner/GoogleService-Info.plist
+
+# Platform Config
+tool/
+lib/firebase_options.dart
