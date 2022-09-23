@@ -1,8 +1,11 @@
 import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cast_tube/models/youtube_track_details.dart';
 import 'package:cast_tube/providers.dart';
+import 'package:cast_tube/init_app.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:universal_platform/universal_platform.dart';
 import 'package:youtube_parser/youtube_parser.dart';
 import 'package:flutter/material.dart';
@@ -16,18 +19,10 @@ import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 import 'package:cast_tube/extensions/extensions.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  await JustAudioBackground.init(
-    androidNotificationChannelId: 'com.ryanheise.bg_demo.channel.audio',
-    androidNotificationChannelName: 'Audio playback',
-    androidNotificationOngoing: true,
-    androidStopForegroundOnPause: true,
-  );
+  await initApp();
 
   String? path;
   if (UniversalPlatform.isWeb == false) path = (await getApplicationSupportDirectory()).path;
-
   final isar = await Isar.open(
     schemas: [YoutubeTrackDetailsSchema],
     inspector: kDebugMode,
@@ -75,6 +70,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
 
   @override
   void initState() {
+    'here'.log();
     super.initState();
     ref.listenOnce<AsyncValue<String?>>(
       receiveIntentProvider,
@@ -94,7 +90,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
       child: Scaffold(
         body: Center(
           child: Padding(
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             child: Column(
               children: <Widget>[
                 Visibility(
@@ -184,16 +180,17 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
   }
 }
 
-class AudioPlayerCard extends ConsumerWidget {
+class AudioPlayerCard extends HookConsumerWidget {
   const AudioPlayerCard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final player = ref.watch(audioPlayerProvider);
-    final duration = ref.watch(currentTrackTimePosition).valueOrNull;
     final selectedTrack = ref.watch(selectedTrackProvider);
     final playbackState = ref.watch(playbackStateProvider).valueOrNull;
+    final duration = useStream(player.positionStream).data;
 
+    playbackState?.updatePosition.log();
     return Card(
       elevation: 4.0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
@@ -212,7 +209,7 @@ class AudioPlayerCard extends ConsumerWidget {
                       ),
                     ),
                   ),
-                  Gap(20)
+                  const Gap(20)
                 ],
                 Expanded(
                   flex: 2,
@@ -228,7 +225,7 @@ class AudioPlayerCard extends ConsumerWidget {
                             onPressed: () {
                               ref.read(audioPlayerProvider).play();
                             },
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.play_arrow,
                             ),
                           ),
@@ -236,7 +233,7 @@ class AudioPlayerCard extends ConsumerWidget {
                             onPressed: () {
                               ref.read(audioPlayerProvider).pause();
                             },
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.pause,
                             ),
                           ),
@@ -265,16 +262,16 @@ class AudioPlayerCard extends ConsumerWidget {
                   },
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 18.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 18.0),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
                         playbackState?.updatePosition == null ? '--:--' : playbackState!.updatePosition.hhmmss,
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Text(
-                        playbackState?.duration == null ? '--:--' : playbackState!.duration!.hhmmss,
+                        duration == null ? '--:--' : duration.hhmmss,
                       ),
                     ],
                   ),
@@ -342,8 +339,7 @@ class YouTubePlayer {
   final Reader _read;
   AudioPlayer get _audioPlayer => _read(audioPlayerProvider);
   YoutubeExplode get _youtube => _read(youtubeProvider);
-  // List<YoutubeTrackDetails> get _youtubeTracksHistory => _read(tracksListProvider);
-  // Box<Map> get _tracksStorageHistory => _read(loadedTracksBox);
+
   Isar get _db => _read(isarDbProvider);
 
   YouTubePlayer(this._read);
