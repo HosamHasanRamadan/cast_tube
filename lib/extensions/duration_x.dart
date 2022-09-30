@@ -8,4 +8,13 @@ extension DurationX on Duration {
     final ss = seconds == 0 ? '00' : seconds.toString().padLeft(2, '0');
     return '$hh$mm:$ss';
   }
+
+  String get mmss {
+    final minutes = inMinutes;
+    final seconds = inSeconds > 60 ? inSeconds % 60 : inSeconds;
+
+    final mm = minutes == 0 ? '00' : minutes.toString().padLeft(2, '0');
+    final ss = seconds == 0 ? '00' : seconds.toString().padLeft(2, '0');
+    return '$mm:$ss';
+  }
 }
