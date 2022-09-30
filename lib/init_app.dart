@@ -16,9 +16,11 @@ import 'package:universal_platform/universal_platform.dart';
 
 Future<void> initApp() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await SleepTimerManager.singleton.init();
+  if (UniversalPlatform.isAndroid || UniversalPlatform.isIOS) {
+    await SleepTimerManager.singleton.init();
 
-  SleepTimerManager.onTimerFinished = stopAudio;
+    SleepTimerManager.onTimerFinished = stopAudio;
+  }
 
   await _initCrashlytics();
   await _initBackgroundAudio();
@@ -30,6 +32,9 @@ Future<void> initApp() async {
 }
 
 Future<void> _initBackgroundAudio() async {
+  if (UniversalPlatform.isDesktop || UniversalPlatform.isWeb) {
+    return;
+  }
   await JustAudioBackground.init(
     androidNotificationChannelId: 'com.ryanheise.bg_demo.channel.audio',
     androidNotificationChannelName: 'Audio playback',
