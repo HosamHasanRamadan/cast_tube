@@ -53,7 +53,11 @@ android {
         applicationId "com.casttube.cast_tube"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
-        minSdkVersion flutter.minSdkVersion
+        // Start Awesome Notifications
+        minSdkVersion 21
+        // minSdkVersion flutter.minSdkVersion
+        // Awesome Notifications End
+        
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName

@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'package:cast_tube/main.dart';
 import 'package:cast_tube/models/youtube_track_details.dart';
 import 'package:cast_tube/utils/logger.dart';
+import 'package:cast_tube/utils/sleep_timer_manager.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:isar/isar.dart';
 
@@ -65,4 +66,8 @@ final receiveIntentProvider = StreamProvider<String?>((ref) async* {
 
 final youtubePlayerProvider = Provider((ref) {
   return YouTubePlayer(ref.read);
+});
+
+final sleepTimerManagerProvider = Provider<SleepTimerManager>((ref) {
+  throw UnimplementedError('Should Override its value');
 });

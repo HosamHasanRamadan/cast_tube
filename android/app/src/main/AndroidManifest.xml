@@ -9,6 +9,10 @@
 	<uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 	<!-- Just Audio End-->
 
+	<!-- Awesome Notifications , req fora android 12  -->
+	<uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+	<!-- Awesome Notifications End -->
+
 	<application
 			android:label="cast_tube"
 			android:name="${applicationName}"

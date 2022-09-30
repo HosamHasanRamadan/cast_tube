@@ -1,38 +1,27 @@
 import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cast_tube/dialogs/sleep_timer_picker.dart';
+import 'package:cast_tube/extensions/extensions.dart';
+import 'package:cast_tube/init_app.dart';
 import 'package:cast_tube/models/youtube_track_details.dart';
 import 'package:cast_tube/providers.dart';
-import 'package:cast_tube/init_app.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:universal_platform/universal_platform.dart';
-import 'package:youtube_parser/youtube_parser.dart';
+import 'package:cast_tube/utils/deps_container.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:isar/isar.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_background/just_audio_background.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
-import 'package:cast_tube/extensions/extensions.dart';
+import 'package:youtube_parser/youtube_parser.dart';
 
 void main() async {
   await initApp();
 
-  String? path;
-  if (UniversalPlatform.isWeb == false) path = (await getApplicationSupportDirectory()).path;
-  final isar = await Isar.open(
-    schemas: [YoutubeTrackDetailsSchema],
-    inspector: kDebugMode,
-    directory: path,
-  );
-
   runApp(
-    ProviderScope(
-      overrides: [
-        isarDbProvider.overrideWithValue(isar),
-      ],
+    UncontrolledProviderScope(
+      container: DepsContainer.rootContainer,
       child: const MyApp(),
     ),
   );
@@ -63,8 +52,9 @@ class MyHomePage extends StatefulHookConsumerWidget {
 class _MyHomePageState extends ConsumerState<MyHomePage> {
   AudioPlayer get player => ref.read(audioPlayerProvider);
 
-  bool loading = false;
   final controller = TextEditingController();
+
+  bool loading = false;
   bool isFetching = false;
 
   @override
@@ -140,6 +130,15 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
               ],
             ),
           ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (context) => const SleepTimerPicker(),
+            );
+          },
+          child: const Icon(Icons.timer),
         ),
       ),
     );
