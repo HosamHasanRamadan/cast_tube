@@ -1,0 +1,26 @@
+icons_launcher:
+  image_path: "assets/launcher_icons/round_rec_icon.png"
+  platforms:
+    android:
+      enable: true
+      image_path: "assets/launcher_icons/round_rec_icon.png"
+      adaptive_background_color: "#ffffff"
+      # adaptive_background_image: "assets/ic_launcher_foreground.png"
+      adaptive_foreground_image: "assets/launcher_icons/trans_icon.png"
+      adaptive_round_image: "assets/launcher_icons/round_icon.png"
+    ios:
+      enable: true
+      image_path: "assets/launcher_icons/rec_icon.png"
+    web:
+      enable: true
+      image_path: "assets/launcher_icons/round_rec_icon.png"
+      favicon_path: "assets/launcher_icons/round_icon.png"
+    macos:
+      enable: true
+      image_path: "assets/launcher_icons/round_rec_icon.png"
+    windows:
+      enable: true
+      image_path: "assets/launcher_icons/round_rec_icon.png"
+    linux:
+      enable: false
+      # image_path: "assets/ic_logo_border.png"
