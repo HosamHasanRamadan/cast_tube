@@ -36,6 +36,7 @@ Future<void> _initBackgroundAudio() async {
     return;
   }
   await JustAudioBackground.init(
+    androidNotificationIcon: 'drawable/ic_stat_app_icon',
     androidNotificationChannelId: 'com.ryanheise.bg_demo.channel.audio',
     androidNotificationChannelName: 'Audio playback',
     androidStopForegroundOnPause: false,
