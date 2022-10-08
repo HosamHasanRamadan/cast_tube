@@ -1,6 +1,8 @@
 import 'package:cast_tube/extensions/extensions.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+typedef Reader = T Function<T>(ProviderListenable<T> provider);
+
 /// This Dependency provider for all global `AlwaysAliveProviderBase` type
 /// that gives you the ability to read [read,refresh,invalidate]
 abstract class DepsContainer {
@@ -11,15 +13,11 @@ abstract class DepsContainer {
   }
 
   static void init({
-    Duration? cacheTime,
-    Duration? disposeDelay,
     List<Override> overrides = const [],
     List<ProviderObserver>? observers,
   }) {
     if (_rootContainer != null) 'container is initialized'.log();
     _rootContainer ??= ProviderContainer(
-      cacheTime: cacheTime,
-      disposeDelay: disposeDelay,
       overrides: overrides,
       observers: observers,
     );

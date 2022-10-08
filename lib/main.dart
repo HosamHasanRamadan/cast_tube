@@ -60,7 +60,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    ref.listenOnce<AsyncValue<String?>>(
+    ref.listenManual<AsyncValue<String?>>(
       receiveIntentProvider,
       (previous, next) {
         final value = next.valueOrNull;
