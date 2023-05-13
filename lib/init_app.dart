@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:cast_tube/firebase_options.dart';
 import 'package:cast_tube/models/youtube_track_details.dart';
 import 'package:cast_tube/providers.dart';
@@ -17,7 +16,7 @@ import 'package:universal_platform/universal_platform.dart';
 Future<void> initApp() async {
   WidgetsFlutterBinding.ensureInitialized();
   if (UniversalPlatform.isAndroid || UniversalPlatform.isIOS) {
-    await SleepTimerManager.singleton.init();
+    await SleepTimerManager.init();
 
     SleepTimerManager.onTimerFinished = stopAudio;
   }
@@ -26,7 +25,6 @@ Future<void> initApp() async {
   await _initBackgroundAudio();
   final db = await _initDataBase();
   DepsContainer.init(overrides: [
-    sleepTimerManagerProvider.overrideWithValue(SleepTimerManager.singleton),
     isarDbProvider.overrideWithValue(db),
   ]);
 }
@@ -62,9 +60,9 @@ Future<Isar> _initDataBase() async {
   String? path;
   if (UniversalPlatform.isWeb == false) path = (await getApplicationSupportDirectory()).path;
   final isar = await Isar.open(
-    schemas: [YoutubeTrackDetailsSchema],
+    [YoutubeTrackDetailsSchema],
     inspector: kDebugMode,
-    directory: path,
+    directory: path!,
   );
   return isar;
 }

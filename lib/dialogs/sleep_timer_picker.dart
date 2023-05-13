@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:cast_tube/extensions/extensions.dart';
-import 'package:cast_tube/providers.dart';
 import 'package:cast_tube/utils/sleep_timer_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:wheel_slider/wheel_slider.dart';
@@ -14,8 +13,6 @@ class SleepTimerPicker extends StatefulWidget {
 }
 
 class _SleepTimerPickerState extends State<SleepTimerPicker> {
-  SleepTimerManager get timerManager => context.read(sleepTimerManagerProvider);
-
   static const numberOfTicks = 30;
   int minutesPicked = 5;
 
@@ -60,9 +57,9 @@ class _SleepTimerPickerState extends State<SleepTimerPicker> {
   }
 
   void _getRemainingDuration() {
-    timerManager.remainingTime().then(
-          (value) => remainingTimeNotifier.value = value,
-        );
+    SleepTimerManager.remainingTime().then(
+      (value) => remainingTimeNotifier.value = value,
+    );
   }
 
   Widget get countDown {
@@ -74,7 +71,7 @@ class _SleepTimerPickerState extends State<SleepTimerPicker> {
           style: Theme.of(context).textTheme.headline4,
         ),
         TextButton(
-          onPressed: () => timerManager.stop(),
+          onPressed: () => SleepTimerManager.stop(),
           child: const Text('Stop'),
         ),
       ],
@@ -104,7 +101,7 @@ class _SleepTimerPickerState extends State<SleepTimerPicker> {
             style: Theme.of(context).textTheme.headline5,
           ),
           TextButton(
-            onPressed: () => timerManager.setTimer(
+            onPressed: () => SleepTimerManager.setTimer(
               Duration(minutes: minutesPicked),
             ),
             child: const Text('Set'),

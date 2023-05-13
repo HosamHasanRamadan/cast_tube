@@ -34,7 +34,7 @@ final playbackStateProvider = StreamProvider((ref) {
 
 final tracksListProvider = Provider<UnmodifiableListView<YoutubeTrackDetails>>((ref) {
   final db = ref.watch(isarDbProvider);
-  final query = db.youtubeTrackDetailss.where().sortByCreatedAtDesc();
+  final query = db.youtubeTrackDetails.where().sortByCreatedAtDesc();
   final sub = query.watchLazy().listen((event) {
     ref.invalidateSelf();
   });
@@ -66,8 +66,4 @@ final receiveIntentProvider = StreamProvider<String?>((ref) async* {
 
 final youtubePlayerProvider = Provider((ref) {
   return YouTubePlayer(ref.read);
-});
-
-final sleepTimerManagerProvider = Provider<SleepTimerManager>((ref) {
-  throw UnimplementedError('Should Override its value');
 });

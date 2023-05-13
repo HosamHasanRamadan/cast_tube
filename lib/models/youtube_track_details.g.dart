@@ -6,390 +6,345 @@ part of 'youtube_track_details.dart';
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable
+// coverage:ignore-file
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters, always_specify_types
 
 extension GetYoutubeTrackDetailsCollection on Isar {
-  IsarCollection<YoutubeTrackDetails> get youtubeTrackDetailss =>
-      getCollection();
+  IsarCollection<YoutubeTrackDetails> get youtubeTrackDetails =>
+      this.collection();
 }
 
 const YoutubeTrackDetailsSchema = CollectionSchema(
-  name: 'YoutubeTrackDetails',
-  schema:
-      '{"name":"YoutubeTrackDetails","idName":"id","properties":[{"name":"audioStreamUrl","type":"String"},{"name":"createdAt","type":"Long"},{"name":"duration","type":"String"},{"name":"lastModifiedAt","type":"Long"},{"name":"thumbnailUrl","type":"String"},{"name":"title","type":"String"},{"name":"trackId","type":"String"},{"name":"url","type":"String"}],"indexes":[{"name":"trackId","unique":true,"properties":[{"name":"trackId","type":"Hash","caseSensitive":true}]}],"links":[]}',
-  idName: 'id',
-  propertyIds: {
-    'audioStreamUrl': 0,
-    'createdAt': 1,
-    'duration': 2,
-    'lastModifiedAt': 3,
-    'thumbnailUrl': 4,
-    'title': 5,
-    'trackId': 6,
-    'url': 7
+  name: r'YoutubeTrackDetails',
+  id: 6973788230804432285,
+  properties: {
+    r'audioStreamUrl': PropertySchema(
+      id: 0,
+      name: r'audioStreamUrl',
+      type: IsarType.string,
+    ),
+    r'createdAt': PropertySchema(
+      id: 1,
+      name: r'createdAt',
+      type: IsarType.dateTime,
+    ),
+    r'duration': PropertySchema(
+      id: 2,
+      name: r'duration',
+      type: IsarType.long,
+    ),
+    r'thumbnailUrl': PropertySchema(
+      id: 3,
+      name: r'thumbnailUrl',
+      type: IsarType.string,
+    ),
+    r'title': PropertySchema(
+      id: 4,
+      name: r'title',
+      type: IsarType.string,
+    ),
+    r'trackId': PropertySchema(
+      id: 5,
+      name: r'trackId',
+      type: IsarType.string,
+    ),
+    r'url': PropertySchema(
+      id: 6,
+      name: r'url',
+      type: IsarType.string,
+    )
   },
-  listProperties: {},
-  indexIds: {'trackId': 0},
-  indexValueTypes: {
-    'trackId': [
-      IndexValueType.stringHash,
-    ]
+  estimateSize: _youtubeTrackDetailsEstimateSize,
+  serialize: _youtubeTrackDetailsSerialize,
+  deserialize: _youtubeTrackDetailsDeserialize,
+  deserializeProp: _youtubeTrackDetailsDeserializeProp,
+  idName: r'id',
+  indexes: {
+    r'trackId': IndexSchema(
+      id: -8614467705999066844,
+      name: r'trackId',
+      unique: true,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'trackId',
+          type: IndexType.hash,
+          caseSensitive: true,
+        )
+      ],
+    )
   },
-  linkIds: {},
-  backlinkLinkNames: {},
+  links: {},
+  embeddedSchemas: {},
   getId: _youtubeTrackDetailsGetId,
-  setId: _youtubeTrackDetailsSetId,
   getLinks: _youtubeTrackDetailsGetLinks,
-  attachLinks: _youtubeTrackDetailsAttachLinks,
-  serializeNative: _youtubeTrackDetailsSerializeNative,
-  deserializeNative: _youtubeTrackDetailsDeserializeNative,
-  deserializePropNative: _youtubeTrackDetailsDeserializePropNative,
-  serializeWeb: _youtubeTrackDetailsSerializeWeb,
-  deserializeWeb: _youtubeTrackDetailsDeserializeWeb,
-  deserializePropWeb: _youtubeTrackDetailsDeserializePropWeb,
-  version: 3,
+  attach: _youtubeTrackDetailsAttach,
+  version: '3.1.0+1',
 );
 
-int? _youtubeTrackDetailsGetId(YoutubeTrackDetails object) {
-  if (object.id == Isar.autoIncrement) {
-    return null;
-  } else {
-    return object.id;
-  }
+int _youtubeTrackDetailsEstimateSize(
+  YoutubeTrackDetails object,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  var bytesCount = offsets.last;
+  bytesCount += 3 + object.audioStreamUrl.length * 3;
+  bytesCount += 3 + object.thumbnailUrl.length * 3;
+  bytesCount += 3 + object.title.length * 3;
+  bytesCount += 3 + object.trackId.length * 3;
+  bytesCount += 3 + object.url.length * 3;
+  return bytesCount;
 }
 
-void _youtubeTrackDetailsSetId(YoutubeTrackDetails object, int id) {
-  object.id = id;
+void _youtubeTrackDetailsSerialize(
+  YoutubeTrackDetails object,
+  IsarWriter writer,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  writer.writeString(offsets[0], object.audioStreamUrl);
+  writer.writeDateTime(offsets[1], object.createdAt);
+  writer.writeLong(offsets[2], object.duration);
+  writer.writeString(offsets[3], object.thumbnailUrl);
+  writer.writeString(offsets[4], object.title);
+  writer.writeString(offsets[5], object.trackId);
+  writer.writeString(offsets[6], object.url);
 }
 
-List<IsarLinkBase> _youtubeTrackDetailsGetLinks(YoutubeTrackDetails object) {
-  return [];
-}
-
-const _youtubeTrackDetailsUriConverter = UriConverter();
-const _youtubeTrackDetailsDurationConverter = DurationConverter();
-
-void _youtubeTrackDetailsSerializeNative(
-    IsarCollection<YoutubeTrackDetails> collection,
-    IsarRawObject rawObj,
-    YoutubeTrackDetails object,
-    int staticSize,
-    List<int> offsets,
-    AdapterAlloc alloc) {
-  var dynamicSize = 0;
-  final value0 = _youtubeTrackDetailsUriConverter.toIsar(object.audioStreamUrl);
-  final _audioStreamUrl = IsarBinaryWriter.utf8Encoder.convert(value0);
-  dynamicSize += (_audioStreamUrl.length) as int;
-  final value1 = object.createdAt;
-  final _createdAt = value1;
-  final value2 = _youtubeTrackDetailsDurationConverter.toIsar(object.duration);
-  IsarUint8List? _duration;
-  if (value2 != null) {
-    _duration = IsarBinaryWriter.utf8Encoder.convert(value2);
-  }
-  dynamicSize += (_duration?.length ?? 0) as int;
-  final value3 = object.lastModifiedAt;
-  final _lastModifiedAt = value3;
-  final value4 = _youtubeTrackDetailsUriConverter.toIsar(object.thumbnailUrl);
-  final _thumbnailUrl = IsarBinaryWriter.utf8Encoder.convert(value4);
-  dynamicSize += (_thumbnailUrl.length) as int;
-  final value5 = object.title;
-  final _title = IsarBinaryWriter.utf8Encoder.convert(value5);
-  dynamicSize += (_title.length) as int;
-  final value6 = object.trackId;
-  final _trackId = IsarBinaryWriter.utf8Encoder.convert(value6);
-  dynamicSize += (_trackId.length) as int;
-  final value7 = _youtubeTrackDetailsUriConverter.toIsar(object.url);
-  final _url = IsarBinaryWriter.utf8Encoder.convert(value7);
-  dynamicSize += (_url.length) as int;
-  final size = staticSize + dynamicSize;
-
-  rawObj.buffer = alloc(size);
-  rawObj.buffer_length = size;
-  final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
-  final writer = IsarBinaryWriter(buffer, staticSize);
-  writer.writeBytes(offsets[0], _audioStreamUrl);
-  writer.writeDateTime(offsets[1], _createdAt);
-  writer.writeBytes(offsets[2], _duration);
-  writer.writeDateTime(offsets[3], _lastModifiedAt);
-  writer.writeBytes(offsets[4], _thumbnailUrl);
-  writer.writeBytes(offsets[5], _title);
-  writer.writeBytes(offsets[6], _trackId);
-  writer.writeBytes(offsets[7], _url);
-}
-
-YoutubeTrackDetails _youtubeTrackDetailsDeserializeNative(
-    IsarCollection<YoutubeTrackDetails> collection,
-    int id,
-    IsarBinaryReader reader,
-    List<int> offsets) {
-  final object = YoutubeTrackDetails();
-  object.audioStreamUrl =
-      _youtubeTrackDetailsUriConverter.fromIsar(reader.readString(offsets[0]));
-  object.duration = _youtubeTrackDetailsDurationConverter
-      .fromIsar(reader.readStringOrNull(offsets[2]));
-  object.id = id;
-  object.thumbnailUrl =
-      _youtubeTrackDetailsUriConverter.fromIsar(reader.readString(offsets[4]));
-  object.title = reader.readString(offsets[5]);
-  object.trackId = reader.readString(offsets[6]);
-  object.url =
-      _youtubeTrackDetailsUriConverter.fromIsar(reader.readString(offsets[7]));
+YoutubeTrackDetails _youtubeTrackDetailsDeserialize(
+  Id id,
+  IsarReader reader,
+  List<int> offsets,
+  Map<Type, List<int>> allOffsets,
+) {
+  final object = YoutubeTrackDetails(
+    audioStreamUrl: reader.readString(offsets[0]),
+    createdAt: reader.readDateTime(offsets[1]),
+    duration: reader.readLongOrNull(offsets[2]),
+    thumbnailUrl: reader.readString(offsets[3]),
+    title: reader.readString(offsets[4]),
+    trackId: reader.readString(offsets[5]),
+    url: reader.readString(offsets[6]),
+  );
   return object;
 }
 
-P _youtubeTrackDetailsDeserializePropNative<P>(
-    int id, IsarBinaryReader reader, int propertyIndex, int offset) {
-  switch (propertyIndex) {
-    case -1:
-      return id as P;
+P _youtubeTrackDetailsDeserializeProp<P>(
+  IsarReader reader,
+  int propertyId,
+  int offset,
+  Map<Type, List<int>> allOffsets,
+) {
+  switch (propertyId) {
     case 0:
-      return (_youtubeTrackDetailsUriConverter
-          .fromIsar(reader.readString(offset))) as P;
+      return (reader.readString(offset)) as P;
     case 1:
       return (reader.readDateTime(offset)) as P;
     case 2:
-      return (_youtubeTrackDetailsDurationConverter
-          .fromIsar(reader.readStringOrNull(offset))) as P;
+      return (reader.readLongOrNull(offset)) as P;
     case 3:
-      return (reader.readDateTime(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 4:
-      return (_youtubeTrackDetailsUriConverter
-          .fromIsar(reader.readString(offset))) as P;
+      return (reader.readString(offset)) as P;
     case 5:
       return (reader.readString(offset)) as P;
     case 6:
       return (reader.readString(offset)) as P;
-    case 7:
-      return (_youtubeTrackDetailsUriConverter
-          .fromIsar(reader.readString(offset))) as P;
     default:
-      throw 'Illegal propertyIndex';
+      throw IsarError('Unknown property with id $propertyId');
   }
 }
 
-dynamic _youtubeTrackDetailsSerializeWeb(
-    IsarCollection<YoutubeTrackDetails> collection,
+Id _youtubeTrackDetailsGetId(YoutubeTrackDetails object) {
+  return object.id;
+}
+
+List<IsarLinkBase<dynamic>> _youtubeTrackDetailsGetLinks(
     YoutubeTrackDetails object) {
-  final jsObj = IsarNative.newJsObject();
-  IsarNative.jsObjectSet(jsObj, 'audioStreamUrl',
-      _youtubeTrackDetailsUriConverter.toIsar(object.audioStreamUrl));
-  IsarNative.jsObjectSet(
-      jsObj, 'createdAt', object.createdAt.toUtc().millisecondsSinceEpoch);
-  IsarNative.jsObjectSet(jsObj, 'duration',
-      _youtubeTrackDetailsDurationConverter.toIsar(object.duration));
-  IsarNative.jsObjectSet(jsObj, 'id', object.id);
-  IsarNative.jsObjectSet(jsObj, 'lastModifiedAt',
-      object.lastModifiedAt.toUtc().millisecondsSinceEpoch);
-  IsarNative.jsObjectSet(jsObj, 'thumbnailUrl',
-      _youtubeTrackDetailsUriConverter.toIsar(object.thumbnailUrl));
-  IsarNative.jsObjectSet(jsObj, 'title', object.title);
-  IsarNative.jsObjectSet(jsObj, 'trackId', object.trackId);
-  IsarNative.jsObjectSet(
-      jsObj, 'url', _youtubeTrackDetailsUriConverter.toIsar(object.url));
-  return jsObj;
+  return [];
 }
 
-YoutubeTrackDetails _youtubeTrackDetailsDeserializeWeb(
-    IsarCollection<YoutubeTrackDetails> collection, dynamic jsObj) {
-  final object = YoutubeTrackDetails();
-  object.audioStreamUrl = _youtubeTrackDetailsUriConverter
-      .fromIsar(IsarNative.jsObjectGet(jsObj, 'audioStreamUrl') ?? '');
-  object.duration = _youtubeTrackDetailsDurationConverter
-      .fromIsar(IsarNative.jsObjectGet(jsObj, 'duration'));
-  object.id = IsarNative.jsObjectGet(jsObj, 'id');
-  object.thumbnailUrl = _youtubeTrackDetailsUriConverter
-      .fromIsar(IsarNative.jsObjectGet(jsObj, 'thumbnailUrl') ?? '');
-  object.title = IsarNative.jsObjectGet(jsObj, 'title') ?? '';
-  object.trackId = IsarNative.jsObjectGet(jsObj, 'trackId') ?? '';
-  object.url = _youtubeTrackDetailsUriConverter
-      .fromIsar(IsarNative.jsObjectGet(jsObj, 'url') ?? '');
-  return object;
-}
-
-P _youtubeTrackDetailsDeserializePropWeb<P>(Object jsObj, String propertyName) {
-  switch (propertyName) {
-    case 'audioStreamUrl':
-      return (_youtubeTrackDetailsUriConverter.fromIsar(
-          IsarNative.jsObjectGet(jsObj, 'audioStreamUrl') ?? '')) as P;
-    case 'createdAt':
-      return (IsarNative.jsObjectGet(jsObj, 'createdAt') != null
-          ? DateTime.fromMillisecondsSinceEpoch(
-                  IsarNative.jsObjectGet(jsObj, 'createdAt'),
-                  isUtc: true)
-              .toLocal()
-          : DateTime.fromMillisecondsSinceEpoch(0)) as P;
-    case 'duration':
-      return (_youtubeTrackDetailsDurationConverter
-          .fromIsar(IsarNative.jsObjectGet(jsObj, 'duration'))) as P;
-    case 'id':
-      return (IsarNative.jsObjectGet(jsObj, 'id')) as P;
-    case 'lastModifiedAt':
-      return (IsarNative.jsObjectGet(jsObj, 'lastModifiedAt') != null
-          ? DateTime.fromMillisecondsSinceEpoch(
-                  IsarNative.jsObjectGet(jsObj, 'lastModifiedAt'),
-                  isUtc: true)
-              .toLocal()
-          : DateTime.fromMillisecondsSinceEpoch(0)) as P;
-    case 'thumbnailUrl':
-      return (_youtubeTrackDetailsUriConverter
-          .fromIsar(IsarNative.jsObjectGet(jsObj, 'thumbnailUrl') ?? '')) as P;
-    case 'title':
-      return (IsarNative.jsObjectGet(jsObj, 'title') ?? '') as P;
-    case 'trackId':
-      return (IsarNative.jsObjectGet(jsObj, 'trackId') ?? '') as P;
-    case 'url':
-      return (_youtubeTrackDetailsUriConverter
-          .fromIsar(IsarNative.jsObjectGet(jsObj, 'url') ?? '')) as P;
-    default:
-      throw 'Illegal propertyName';
-  }
-}
-
-void _youtubeTrackDetailsAttachLinks(
-    IsarCollection col, int id, YoutubeTrackDetails object) {}
+void _youtubeTrackDetailsAttach(
+    IsarCollection<dynamic> col, Id id, YoutubeTrackDetails object) {}
 
 extension YoutubeTrackDetailsByIndex on IsarCollection<YoutubeTrackDetails> {
   Future<YoutubeTrackDetails?> getByTrackId(String trackId) {
-    return getByIndex('trackId', [trackId]);
+    return getByIndex(r'trackId', [trackId]);
   }
 
   YoutubeTrackDetails? getByTrackIdSync(String trackId) {
-    return getByIndexSync('trackId', [trackId]);
+    return getByIndexSync(r'trackId', [trackId]);
   }
 
   Future<bool> deleteByTrackId(String trackId) {
-    return deleteByIndex('trackId', [trackId]);
+    return deleteByIndex(r'trackId', [trackId]);
   }
 
   bool deleteByTrackIdSync(String trackId) {
-    return deleteByIndexSync('trackId', [trackId]);
+    return deleteByIndexSync(r'trackId', [trackId]);
   }
 
   Future<List<YoutubeTrackDetails?>> getAllByTrackId(
       List<String> trackIdValues) {
     final values = trackIdValues.map((e) => [e]).toList();
-    return getAllByIndex('trackId', values);
+    return getAllByIndex(r'trackId', values);
   }
 
   List<YoutubeTrackDetails?> getAllByTrackIdSync(List<String> trackIdValues) {
     final values = trackIdValues.map((e) => [e]).toList();
-    return getAllByIndexSync('trackId', values);
+    return getAllByIndexSync(r'trackId', values);
   }
 
   Future<int> deleteAllByTrackId(List<String> trackIdValues) {
     final values = trackIdValues.map((e) => [e]).toList();
-    return deleteAllByIndex('trackId', values);
+    return deleteAllByIndex(r'trackId', values);
   }
 
   int deleteAllByTrackIdSync(List<String> trackIdValues) {
     final values = trackIdValues.map((e) => [e]).toList();
-    return deleteAllByIndexSync('trackId', values);
+    return deleteAllByIndexSync(r'trackId', values);
+  }
+
+  Future<Id> putByTrackId(YoutubeTrackDetails object) {
+    return putByIndex(r'trackId', object);
+  }
+
+  Id putByTrackIdSync(YoutubeTrackDetails object, {bool saveLinks = true}) {
+    return putByIndexSync(r'trackId', object, saveLinks: saveLinks);
+  }
+
+  Future<List<Id>> putAllByTrackId(List<YoutubeTrackDetails> objects) {
+    return putAllByIndex(r'trackId', objects);
+  }
+
+  List<Id> putAllByTrackIdSync(List<YoutubeTrackDetails> objects,
+      {bool saveLinks = true}) {
+    return putAllByIndexSync(r'trackId', objects, saveLinks: saveLinks);
   }
 }
 
 extension YoutubeTrackDetailsQueryWhereSort
     on QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QWhere> {
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterWhere> anyId() {
-    return addWhereClauseInternal(const IdWhereClause.any());
-  }
-
-  QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterWhere>
-      anyTrackId() {
-    return addWhereClauseInternal(
-        const IndexWhereClause.any(indexName: 'trackId'));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(const IdWhereClause.any());
+    });
   }
 }
 
 extension YoutubeTrackDetailsQueryWhere
     on QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QWhereClause> {
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterWhereClause>
-      idEqualTo(int id) {
-    return addWhereClauseInternal(IdWhereClause.between(
-      lower: id,
-      includeLower: true,
-      upper: id,
-      includeUpper: true,
-    ));
+      idEqualTo(Id id) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IdWhereClause.between(
+        lower: id,
+        upper: id,
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterWhereClause>
-      idNotEqualTo(int id) {
-    if (whereSortInternal == Sort.asc) {
-      return addWhereClauseInternal(
-        IdWhereClause.lessThan(upper: id, includeUpper: false),
-      ).addWhereClauseInternal(
-        IdWhereClause.greaterThan(lower: id, includeLower: false),
+      idNotEqualTo(Id id) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
+            )
+            .addWhereClause(
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
+            );
+      } else {
+        return query
+            .addWhereClause(
+              IdWhereClause.greaterThan(lower: id, includeLower: false),
+            )
+            .addWhereClause(
+              IdWhereClause.lessThan(upper: id, includeUpper: false),
+            );
+      }
+    });
+  }
+
+  QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterWhereClause>
+      idGreaterThan(Id id, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IdWhereClause.greaterThan(lower: id, includeLower: include),
       );
-    } else {
-      return addWhereClauseInternal(
-        IdWhereClause.greaterThan(lower: id, includeLower: false),
-      ).addWhereClauseInternal(
-        IdWhereClause.lessThan(upper: id, includeUpper: false),
+    });
+  }
+
+  QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterWhereClause>
+      idLessThan(Id id, {bool include = false}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        IdWhereClause.lessThan(upper: id, includeUpper: include),
       );
-    }
-  }
-
-  QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterWhereClause>
-      idGreaterThan(int id, {bool include = false}) {
-    return addWhereClauseInternal(
-      IdWhereClause.greaterThan(lower: id, includeLower: include),
-    );
-  }
-
-  QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterWhereClause>
-      idLessThan(int id, {bool include = false}) {
-    return addWhereClauseInternal(
-      IdWhereClause.lessThan(upper: id, includeUpper: include),
-    );
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterWhereClause>
       idBetween(
-    int lowerId,
-    int upperId, {
+    Id lowerId,
+    Id upperId, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addWhereClauseInternal(IdWhereClause.between(
-      lower: lowerId,
-      includeLower: includeLower,
-      upper: upperId,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IdWhereClause.between(
+        lower: lowerId,
+        includeLower: includeLower,
+        upper: upperId,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterWhereClause>
       trackIdEqualTo(String trackId) {
-    return addWhereClauseInternal(IndexWhereClause.equalTo(
-      indexName: 'trackId',
-      value: [trackId],
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'trackId',
+        value: [trackId],
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterWhereClause>
       trackIdNotEqualTo(String trackId) {
-    if (whereSortInternal == Sort.asc) {
-      return addWhereClauseInternal(IndexWhereClause.lessThan(
-        indexName: 'trackId',
-        upper: [trackId],
-        includeUpper: false,
-      )).addWhereClauseInternal(IndexWhereClause.greaterThan(
-        indexName: 'trackId',
-        lower: [trackId],
-        includeLower: false,
-      ));
-    } else {
-      return addWhereClauseInternal(IndexWhereClause.greaterThan(
-        indexName: 'trackId',
-        lower: [trackId],
-        includeLower: false,
-      )).addWhereClauseInternal(IndexWhereClause.lessThan(
-        indexName: 'trackId',
-        upper: [trackId],
-        includeUpper: false,
-      ));
-    }
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'trackId',
+              lower: [],
+              upper: [trackId],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'trackId',
+              lower: [trackId],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'trackId',
+              lower: [trackId],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'trackId',
+              lower: [],
+              upper: [trackId],
+              includeUpper: false,
+            ));
+      }
+    });
   }
 }
 
@@ -397,118 +352,148 @@ extension YoutubeTrackDetailsQueryFilter on QueryBuilder<YoutubeTrackDetails,
     YoutubeTrackDetails, QFilterCondition> {
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
       audioStreamUrlEqualTo(
-    Uri value, {
+    String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'audioStreamUrl',
-      value: _youtubeTrackDetailsUriConverter.toIsar(value),
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'audioStreamUrl',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
       audioStreamUrlGreaterThan(
-    Uri value, {
-    bool caseSensitive = true,
+    String value, {
     bool include = false,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'audioStreamUrl',
-      value: _youtubeTrackDetailsUriConverter.toIsar(value),
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'audioStreamUrl',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
       audioStreamUrlLessThan(
-    Uri value, {
-    bool caseSensitive = true,
+    String value, {
     bool include = false,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'audioStreamUrl',
-      value: _youtubeTrackDetailsUriConverter.toIsar(value),
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'audioStreamUrl',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
       audioStreamUrlBetween(
-    Uri lower,
-    Uri upper, {
-    bool caseSensitive = true,
+    String lower,
+    String upper, {
     bool includeLower = true,
     bool includeUpper = true,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'audioStreamUrl',
-      lower: _youtubeTrackDetailsUriConverter.toIsar(lower),
-      includeLower: includeLower,
-      upper: _youtubeTrackDetailsUriConverter.toIsar(upper),
-      includeUpper: includeUpper,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'audioStreamUrl',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
       audioStreamUrlStartsWith(
-    Uri value, {
+    String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
-      property: 'audioStreamUrl',
-      value: _youtubeTrackDetailsUriConverter.toIsar(value),
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'audioStreamUrl',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
       audioStreamUrlEndsWith(
-    Uri value, {
+    String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
-      property: 'audioStreamUrl',
-      value: _youtubeTrackDetailsUriConverter.toIsar(value),
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'audioStreamUrl',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
-      audioStreamUrlContains(Uri value, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
-      property: 'audioStreamUrl',
-      value: _youtubeTrackDetailsUriConverter.toIsar(value),
-      caseSensitive: caseSensitive,
-    ));
+      audioStreamUrlContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'audioStreamUrl',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
       audioStreamUrlMatches(String pattern, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
-      property: 'audioStreamUrl',
-      value: pattern,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'audioStreamUrl',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
+      audioStreamUrlIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'audioStreamUrl',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
+      audioStreamUrlIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'audioStreamUrl',
+        value: '',
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
       createdAtEqualTo(DateTime value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'createdAt',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'createdAt',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
@@ -516,12 +501,13 @@ extension YoutubeTrackDetailsQueryFilter on QueryBuilder<YoutubeTrackDetails,
     DateTime value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'createdAt',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'createdAt',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
@@ -529,12 +515,13 @@ extension YoutubeTrackDetailsQueryFilter on QueryBuilder<YoutubeTrackDetails,
     DateTime value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'createdAt',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'createdAt',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
@@ -544,347 +531,281 @@ extension YoutubeTrackDetailsQueryFilter on QueryBuilder<YoutubeTrackDetails,
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'createdAt',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'createdAt',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
       durationIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
-      property: 'duration',
-      value: null,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'duration',
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
-      durationEqualTo(
-    Duration? value, {
-    bool caseSensitive = true,
-  }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'duration',
-      value: _youtubeTrackDetailsDurationConverter.toIsar(value),
-      caseSensitive: caseSensitive,
-    ));
+      durationIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'duration',
+      ));
+    });
+  }
+
+  QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
+      durationEqualTo(int? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'duration',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
       durationGreaterThan(
-    Duration? value, {
-    bool caseSensitive = true,
+    int? value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'duration',
-      value: _youtubeTrackDetailsDurationConverter.toIsar(value),
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'duration',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
       durationLessThan(
-    Duration? value, {
-    bool caseSensitive = true,
+    int? value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'duration',
-      value: _youtubeTrackDetailsDurationConverter.toIsar(value),
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'duration',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
       durationBetween(
-    Duration? lower,
-    Duration? upper, {
-    bool caseSensitive = true,
+    int? lower,
+    int? upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'duration',
-      lower: _youtubeTrackDetailsDurationConverter.toIsar(lower),
-      includeLower: includeLower,
-      upper: _youtubeTrackDetailsDurationConverter.toIsar(upper),
-      includeUpper: includeUpper,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'duration',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
-      durationStartsWith(
-    Duration value, {
-    bool caseSensitive = true,
-  }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
-      property: 'duration',
-      value: _youtubeTrackDetailsDurationConverter.toIsar(value),
-      caseSensitive: caseSensitive,
-    ));
-  }
-
-  QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
-      durationEndsWith(
-    Duration value, {
-    bool caseSensitive = true,
-  }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
-      property: 'duration',
-      value: _youtubeTrackDetailsDurationConverter.toIsar(value),
-      caseSensitive: caseSensitive,
-    ));
-  }
-
-  QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
-      durationContains(Duration value, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
-      property: 'duration',
-      value: _youtubeTrackDetailsDurationConverter.toIsar(value),
-      caseSensitive: caseSensitive,
-    ));
-  }
-
-  QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
-      durationMatches(String pattern, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
-      property: 'duration',
-      value: pattern,
-      caseSensitive: caseSensitive,
-    ));
-  }
-
-  QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
-      idIsNull() {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.isNull,
-      property: 'id',
-      value: null,
-    ));
-  }
-
-  QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
-      idEqualTo(int value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'id',
-      value: value,
-    ));
+      idEqualTo(Id value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'id',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
       idGreaterThan(
-    int value, {
+    Id value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'id',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'id',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
       idLessThan(
-    int value, {
+    Id value, {
     bool include = false,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'id',
-      value: value,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'id',
+        value: value,
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
       idBetween(
-    int lower,
-    int upper, {
+    Id lower,
+    Id upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'id',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-    ));
-  }
-
-  QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
-      lastModifiedAtEqualTo(DateTime value) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'lastModifiedAt',
-      value: value,
-    ));
-  }
-
-  QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
-      lastModifiedAtGreaterThan(
-    DateTime value, {
-    bool include = false,
-  }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'lastModifiedAt',
-      value: value,
-    ));
-  }
-
-  QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
-      lastModifiedAtLessThan(
-    DateTime value, {
-    bool include = false,
-  }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'lastModifiedAt',
-      value: value,
-    ));
-  }
-
-  QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
-      lastModifiedAtBetween(
-    DateTime lower,
-    DateTime upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'lastModifiedAt',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'id',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
       thumbnailUrlEqualTo(
-    Uri value, {
+    String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'thumbnailUrl',
-      value: _youtubeTrackDetailsUriConverter.toIsar(value),
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'thumbnailUrl',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
       thumbnailUrlGreaterThan(
-    Uri value, {
-    bool caseSensitive = true,
+    String value, {
     bool include = false,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'thumbnailUrl',
-      value: _youtubeTrackDetailsUriConverter.toIsar(value),
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'thumbnailUrl',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
       thumbnailUrlLessThan(
-    Uri value, {
-    bool caseSensitive = true,
+    String value, {
     bool include = false,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'thumbnailUrl',
-      value: _youtubeTrackDetailsUriConverter.toIsar(value),
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'thumbnailUrl',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
       thumbnailUrlBetween(
-    Uri lower,
-    Uri upper, {
-    bool caseSensitive = true,
+    String lower,
+    String upper, {
     bool includeLower = true,
     bool includeUpper = true,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'thumbnailUrl',
-      lower: _youtubeTrackDetailsUriConverter.toIsar(lower),
-      includeLower: includeLower,
-      upper: _youtubeTrackDetailsUriConverter.toIsar(upper),
-      includeUpper: includeUpper,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'thumbnailUrl',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
       thumbnailUrlStartsWith(
-    Uri value, {
+    String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
-      property: 'thumbnailUrl',
-      value: _youtubeTrackDetailsUriConverter.toIsar(value),
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'thumbnailUrl',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
       thumbnailUrlEndsWith(
-    Uri value, {
+    String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
-      property: 'thumbnailUrl',
-      value: _youtubeTrackDetailsUriConverter.toIsar(value),
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'thumbnailUrl',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
-      thumbnailUrlContains(Uri value, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
-      property: 'thumbnailUrl',
-      value: _youtubeTrackDetailsUriConverter.toIsar(value),
-      caseSensitive: caseSensitive,
-    ));
+      thumbnailUrlContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'thumbnailUrl',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
       thumbnailUrlMatches(String pattern, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
-      property: 'thumbnailUrl',
-      value: pattern,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'thumbnailUrl',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
+      thumbnailUrlIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'thumbnailUrl',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
+      thumbnailUrlIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'thumbnailUrl',
+        value: '',
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
@@ -892,60 +813,65 @@ extension YoutubeTrackDetailsQueryFilter on QueryBuilder<YoutubeTrackDetails,
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'title',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'title',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
       titleGreaterThan(
     String value, {
-    bool caseSensitive = true,
     bool include = false,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'title',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'title',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
       titleLessThan(
     String value, {
-    bool caseSensitive = true,
     bool include = false,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'title',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'title',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
       titleBetween(
     String lower,
     String upper, {
-    bool caseSensitive = true,
     bool includeLower = true,
     bool includeUpper = true,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'title',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'title',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
@@ -953,12 +879,13 @@ extension YoutubeTrackDetailsQueryFilter on QueryBuilder<YoutubeTrackDetails,
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
-      property: 'title',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'title',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
@@ -966,32 +893,55 @@ extension YoutubeTrackDetailsQueryFilter on QueryBuilder<YoutubeTrackDetails,
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
-      property: 'title',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'title',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
       titleContains(String value, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
-      property: 'title',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'title',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
       titleMatches(String pattern, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
-      property: 'title',
-      value: pattern,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'title',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
+      titleIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'title',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
+      titleIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'title',
+        value: '',
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
@@ -999,60 +949,65 @@ extension YoutubeTrackDetailsQueryFilter on QueryBuilder<YoutubeTrackDetails,
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'trackId',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'trackId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
       trackIdGreaterThan(
     String value, {
-    bool caseSensitive = true,
     bool include = false,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'trackId',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'trackId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
       trackIdLessThan(
     String value, {
-    bool caseSensitive = true,
     bool include = false,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'trackId',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'trackId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
       trackIdBetween(
     String lower,
     String upper, {
-    bool caseSensitive = true,
     bool includeLower = true,
     bool includeUpper = true,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'trackId',
-      lower: lower,
-      includeLower: includeLower,
-      upper: upper,
-      includeUpper: includeUpper,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'trackId',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
@@ -1060,12 +1015,13 @@ extension YoutubeTrackDetailsQueryFilter on QueryBuilder<YoutubeTrackDetails,
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
-      property: 'trackId',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'trackId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
@@ -1073,328 +1029,413 @@ extension YoutubeTrackDetailsQueryFilter on QueryBuilder<YoutubeTrackDetails,
     String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
-      property: 'trackId',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'trackId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
       trackIdContains(String value, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
-      property: 'trackId',
-      value: value,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'trackId',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
       trackIdMatches(String pattern, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
-      property: 'trackId',
-      value: pattern,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'trackId',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
+      trackIdIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'trackId',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
+      trackIdIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'trackId',
+        value: '',
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
       urlEqualTo(
-    Uri value, {
+    String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.eq,
-      property: 'url',
-      value: _youtubeTrackDetailsUriConverter.toIsar(value),
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'url',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
       urlGreaterThan(
-    Uri value, {
-    bool caseSensitive = true,
+    String value, {
     bool include = false,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.gt,
-      include: include,
-      property: 'url',
-      value: _youtubeTrackDetailsUriConverter.toIsar(value),
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'url',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
       urlLessThan(
-    Uri value, {
-    bool caseSensitive = true,
+    String value, {
     bool include = false,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.lt,
-      include: include,
-      property: 'url',
-      value: _youtubeTrackDetailsUriConverter.toIsar(value),
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'url',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
       urlBetween(
-    Uri lower,
-    Uri upper, {
-    bool caseSensitive = true,
+    String lower,
+    String upper, {
     bool includeLower = true,
     bool includeUpper = true,
+    bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition.between(
-      property: 'url',
-      lower: _youtubeTrackDetailsUriConverter.toIsar(lower),
-      includeLower: includeLower,
-      upper: _youtubeTrackDetailsUriConverter.toIsar(upper),
-      includeUpper: includeUpper,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'url',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
       urlStartsWith(
-    Uri value, {
+    String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.startsWith,
-      property: 'url',
-      value: _youtubeTrackDetailsUriConverter.toIsar(value),
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'url',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
       urlEndsWith(
-    Uri value, {
+    String value, {
     bool caseSensitive = true,
   }) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.endsWith,
-      property: 'url',
-      value: _youtubeTrackDetailsUriConverter.toIsar(value),
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'url',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
-      urlContains(Uri value, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.contains,
-      property: 'url',
-      value: _youtubeTrackDetailsUriConverter.toIsar(value),
-      caseSensitive: caseSensitive,
-    ));
+      urlContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'url',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
       urlMatches(String pattern, {bool caseSensitive = true}) {
-    return addFilterConditionInternal(FilterCondition(
-      type: ConditionType.matches,
-      property: 'url',
-      value: pattern,
-      caseSensitive: caseSensitive,
-    ));
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'url',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
+      urlIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'url',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterFilterCondition>
+      urlIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'url',
+        value: '',
+      ));
+    });
   }
 }
+
+extension YoutubeTrackDetailsQueryObject on QueryBuilder<YoutubeTrackDetails,
+    YoutubeTrackDetails, QFilterCondition> {}
 
 extension YoutubeTrackDetailsQueryLinks on QueryBuilder<YoutubeTrackDetails,
     YoutubeTrackDetails, QFilterCondition> {}
 
-extension YoutubeTrackDetailsQueryWhereSortBy
+extension YoutubeTrackDetailsQuerySortBy
     on QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QSortBy> {
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterSortBy>
       sortByAudioStreamUrl() {
-    return addSortByInternal('audioStreamUrl', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'audioStreamUrl', Sort.asc);
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterSortBy>
       sortByAudioStreamUrlDesc() {
-    return addSortByInternal('audioStreamUrl', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'audioStreamUrl', Sort.desc);
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterSortBy>
       sortByCreatedAt() {
-    return addSortByInternal('createdAt', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'createdAt', Sort.asc);
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterSortBy>
       sortByCreatedAtDesc() {
-    return addSortByInternal('createdAt', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'createdAt', Sort.desc);
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterSortBy>
       sortByDuration() {
-    return addSortByInternal('duration', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'duration', Sort.asc);
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterSortBy>
       sortByDurationDesc() {
-    return addSortByInternal('duration', Sort.desc);
-  }
-
-  QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterSortBy>
-      sortById() {
-    return addSortByInternal('id', Sort.asc);
-  }
-
-  QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterSortBy>
-      sortByIdDesc() {
-    return addSortByInternal('id', Sort.desc);
-  }
-
-  QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterSortBy>
-      sortByLastModifiedAt() {
-    return addSortByInternal('lastModifiedAt', Sort.asc);
-  }
-
-  QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterSortBy>
-      sortByLastModifiedAtDesc() {
-    return addSortByInternal('lastModifiedAt', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'duration', Sort.desc);
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterSortBy>
       sortByThumbnailUrl() {
-    return addSortByInternal('thumbnailUrl', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'thumbnailUrl', Sort.asc);
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterSortBy>
       sortByThumbnailUrlDesc() {
-    return addSortByInternal('thumbnailUrl', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'thumbnailUrl', Sort.desc);
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterSortBy>
       sortByTitle() {
-    return addSortByInternal('title', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'title', Sort.asc);
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterSortBy>
       sortByTitleDesc() {
-    return addSortByInternal('title', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'title', Sort.desc);
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterSortBy>
       sortByTrackId() {
-    return addSortByInternal('trackId', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'trackId', Sort.asc);
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterSortBy>
       sortByTrackIdDesc() {
-    return addSortByInternal('trackId', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'trackId', Sort.desc);
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterSortBy>
       sortByUrl() {
-    return addSortByInternal('url', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'url', Sort.asc);
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterSortBy>
       sortByUrlDesc() {
-    return addSortByInternal('url', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'url', Sort.desc);
+    });
   }
 }
 
-extension YoutubeTrackDetailsQueryWhereSortThenBy
+extension YoutubeTrackDetailsQuerySortThenBy
     on QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QSortThenBy> {
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterSortBy>
       thenByAudioStreamUrl() {
-    return addSortByInternal('audioStreamUrl', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'audioStreamUrl', Sort.asc);
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterSortBy>
       thenByAudioStreamUrlDesc() {
-    return addSortByInternal('audioStreamUrl', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'audioStreamUrl', Sort.desc);
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterSortBy>
       thenByCreatedAt() {
-    return addSortByInternal('createdAt', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'createdAt', Sort.asc);
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterSortBy>
       thenByCreatedAtDesc() {
-    return addSortByInternal('createdAt', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'createdAt', Sort.desc);
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterSortBy>
       thenByDuration() {
-    return addSortByInternal('duration', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'duration', Sort.asc);
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterSortBy>
       thenByDurationDesc() {
-    return addSortByInternal('duration', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'duration', Sort.desc);
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterSortBy>
       thenById() {
-    return addSortByInternal('id', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'id', Sort.asc);
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterSortBy>
       thenByIdDesc() {
-    return addSortByInternal('id', Sort.desc);
-  }
-
-  QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterSortBy>
-      thenByLastModifiedAt() {
-    return addSortByInternal('lastModifiedAt', Sort.asc);
-  }
-
-  QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterSortBy>
-      thenByLastModifiedAtDesc() {
-    return addSortByInternal('lastModifiedAt', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'id', Sort.desc);
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterSortBy>
       thenByThumbnailUrl() {
-    return addSortByInternal('thumbnailUrl', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'thumbnailUrl', Sort.asc);
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterSortBy>
       thenByThumbnailUrlDesc() {
-    return addSortByInternal('thumbnailUrl', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'thumbnailUrl', Sort.desc);
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterSortBy>
       thenByTitle() {
-    return addSortByInternal('title', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'title', Sort.asc);
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterSortBy>
       thenByTitleDesc() {
-    return addSortByInternal('title', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'title', Sort.desc);
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterSortBy>
       thenByTrackId() {
-    return addSortByInternal('trackId', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'trackId', Sort.asc);
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterSortBy>
       thenByTrackIdDesc() {
-    return addSortByInternal('trackId', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'trackId', Sort.desc);
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterSortBy>
       thenByUrl() {
-    return addSortByInternal('url', Sort.asc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'url', Sort.asc);
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QAfterSortBy>
       thenByUrlDesc() {
-    return addSortByInternal('url', Sort.desc);
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'url', Sort.desc);
+    });
   }
 }
 
@@ -1402,92 +1443,106 @@ extension YoutubeTrackDetailsQueryWhereDistinct
     on QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QDistinct> {
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QDistinct>
       distinctByAudioStreamUrl({bool caseSensitive = true}) {
-    return addDistinctByInternal('audioStreamUrl',
-        caseSensitive: caseSensitive);
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'audioStreamUrl',
+          caseSensitive: caseSensitive);
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QDistinct>
       distinctByCreatedAt() {
-    return addDistinctByInternal('createdAt');
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'createdAt');
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QDistinct>
-      distinctByDuration({bool caseSensitive = true}) {
-    return addDistinctByInternal('duration', caseSensitive: caseSensitive);
-  }
-
-  QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QDistinct>
-      distinctById() {
-    return addDistinctByInternal('id');
-  }
-
-  QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QDistinct>
-      distinctByLastModifiedAt() {
-    return addDistinctByInternal('lastModifiedAt');
+      distinctByDuration() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'duration');
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QDistinct>
       distinctByThumbnailUrl({bool caseSensitive = true}) {
-    return addDistinctByInternal('thumbnailUrl', caseSensitive: caseSensitive);
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'thumbnailUrl', caseSensitive: caseSensitive);
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QDistinct>
       distinctByTitle({bool caseSensitive = true}) {
-    return addDistinctByInternal('title', caseSensitive: caseSensitive);
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'title', caseSensitive: caseSensitive);
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QDistinct>
       distinctByTrackId({bool caseSensitive = true}) {
-    return addDistinctByInternal('trackId', caseSensitive: caseSensitive);
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'trackId', caseSensitive: caseSensitive);
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QDistinct>
       distinctByUrl({bool caseSensitive = true}) {
-    return addDistinctByInternal('url', caseSensitive: caseSensitive);
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'url', caseSensitive: caseSensitive);
+    });
   }
 }
 
 extension YoutubeTrackDetailsQueryProperty
     on QueryBuilder<YoutubeTrackDetails, YoutubeTrackDetails, QQueryProperty> {
-  QueryBuilder<YoutubeTrackDetails, Uri, QQueryOperations>
+  QueryBuilder<YoutubeTrackDetails, int, QQueryOperations> idProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'id');
+    });
+  }
+
+  QueryBuilder<YoutubeTrackDetails, String, QQueryOperations>
       audioStreamUrlProperty() {
-    return addPropertyNameInternal('audioStreamUrl');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'audioStreamUrl');
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, DateTime, QQueryOperations>
       createdAtProperty() {
-    return addPropertyNameInternal('createdAt');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'createdAt');
+    });
   }
 
-  QueryBuilder<YoutubeTrackDetails, Duration?, QQueryOperations>
-      durationProperty() {
-    return addPropertyNameInternal('duration');
+  QueryBuilder<YoutubeTrackDetails, int?, QQueryOperations> durationProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'duration');
+    });
   }
 
-  QueryBuilder<YoutubeTrackDetails, int?, QQueryOperations> idProperty() {
-    return addPropertyNameInternal('id');
-  }
-
-  QueryBuilder<YoutubeTrackDetails, DateTime, QQueryOperations>
-      lastModifiedAtProperty() {
-    return addPropertyNameInternal('lastModifiedAt');
-  }
-
-  QueryBuilder<YoutubeTrackDetails, Uri, QQueryOperations>
+  QueryBuilder<YoutubeTrackDetails, String, QQueryOperations>
       thumbnailUrlProperty() {
-    return addPropertyNameInternal('thumbnailUrl');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'thumbnailUrl');
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, String, QQueryOperations> titleProperty() {
-    return addPropertyNameInternal('title');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'title');
+    });
   }
 
   QueryBuilder<YoutubeTrackDetails, String, QQueryOperations>
       trackIdProperty() {
-    return addPropertyNameInternal('trackId');
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'trackId');
+    });
   }
 
-  QueryBuilder<YoutubeTrackDetails, Uri, QQueryOperations> urlProperty() {
-    return addPropertyNameInternal('url');
+  QueryBuilder<YoutubeTrackDetails, String, QQueryOperations> urlProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'url');
+    });
   }
 }
