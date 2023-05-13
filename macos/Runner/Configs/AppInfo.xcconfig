@@ -11,4 +11,4 @@ PRODUCT_NAME = cast_tube
 PRODUCT_BUNDLE_IDENTIFIER = com.casttube.castTube
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2022 com.casttube. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2023 com.casttube. All rights reserved.
