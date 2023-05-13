@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cast_tube/dialogs/sleep_timer_picker.dart';
+import 'package:cast_tube/env.dart';
 import 'package:cast_tube/extensions/extensions.dart';
 import 'package:cast_tube/init_app.dart';
 import 'package:cast_tube/models/youtube_track_details.dart';
@@ -13,17 +14,26 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:isar/isar.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_background/just_audio_background.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 import 'package:youtube_parser/youtube_parser.dart';
 
 void main() async {
-  await initApp();
-
-  runApp(
-    UncontrolledProviderScope(
-      container: DepsContainer.rootContainer,
-      child: const MyApp(),
-    ),
+  await SentryFlutter.init(
+    (options) {
+      options.dsn = Env.sentryDsn;
+      // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
+      // We recommend adjusting this value in production.
+    },
+    appRunner: () async {
+      await initApp();
+      runApp(
+        UncontrolledProviderScope(
+          container: DepsContainer.rootContainer,
+          child: const MyApp(),
+        ),
+      );
+    },
   );
 }
 

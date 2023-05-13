@@ -1,11 +1,8 @@
 import 'dart:async';
-import 'package:cast_tube/firebase_options.dart';
 import 'package:cast_tube/models/youtube_track_details.dart';
 import 'package:cast_tube/providers.dart';
 import 'package:cast_tube/utils/deps_container.dart';
 import 'package:cast_tube/utils/sleep_timer_manager.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
@@ -21,7 +18,6 @@ Future<void> initApp() async {
     SleepTimerManager.onTimerFinished = stopAudio;
   }
 
-  await _initCrashlytics();
   await _initBackgroundAudio();
   final db = await _initDataBase();
   DepsContainer.init(overrides: [
@@ -39,21 +35,6 @@ Future<void> _initBackgroundAudio() async {
     androidNotificationChannelName: 'Audio playback',
     androidStopForegroundOnPause: false,
   );
-}
-
-Future<void> _initCrashlytics() async {
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-
-  /// use Crashlytics only in release mode
-  if (kReleaseMode) {
-    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
-    PlatformDispatcher.instance.onError = (error, stack) {
-      FirebaseCrashlytics.instance.recordError(error, stack);
-      return true;
-    };
-  }
 }
 
 Future<Isar> _initDataBase() async {
