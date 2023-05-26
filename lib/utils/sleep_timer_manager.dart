@@ -6,6 +6,8 @@ import 'package:cast_tube/extensions/extensions.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 
+Future<void> _noActionValued(_) async {}
+
 class SleepTimerManager {
   SleepTimerManager._();
 
@@ -16,12 +18,19 @@ class SleepTimerManager {
   static const _channelGroupKey = 'sleep_timer_group_key';
   static const _timerId = 2021;
 
-  final _notifications = AwesomeNotifications();
+  static final _notifications = AwesomeNotifications()
+    ..setListeners(
+      onActionReceivedMethod: _noActionValued,
+      onNotificationDisplayedMethod: onNotificationDisplayedMethod,
+    );
 
-  late final _displayedStream = _notifications.displayedStream.asBroadcastStream();
-  StreamSubscription? _timerSubscription;
+  @pragma("vm:entry-point")
+  static Future<void> onNotificationDisplayedMethod(ReceivedNotification receivedNotification) async {
+    onTimerFinished?.call();
+    stop();
+  }
 
-  Future<void> init() async {
+  static Future<void> init() async {
     final isReady = await _notifications.initialize(
       null,
       [
@@ -38,7 +47,7 @@ class SleepTimerManager {
       ],
       channelGroups: [
         NotificationChannelGroup(
-          channelGroupkey: _channelGroupKey,
+          channelGroupKey: _channelGroupKey,
           channelGroupName: 'Sleep Timer Group',
         ),
       ],
@@ -48,7 +57,7 @@ class SleepTimerManager {
     isReady.log();
   }
 
-  Future<void> setTimer(Duration duration, [bool forceSet = false]) async {
+  static Future<void> setTimer(Duration duration, [bool forceSet = false]) async {
     if (forceSet) {
       await stop();
       await _setTimer(duration);
@@ -62,9 +71,9 @@ class SleepTimerManager {
     _setTimer(duration);
   }
 
-  Future<void> _setTimer(Duration duration) async {
+  static Future<void> _setTimer(Duration duration) async {
     final timerDate = DateTime.now().add(duration);
-    final isReady = await _notifications.createNotification(
+    await _notifications.createNotification(
       content: NotificationContent(
         id: _timerId,
         channelKey: _channelKey,
@@ -80,24 +89,16 @@ class SleepTimerManager {
         repeats: false,
       ),
     );
-    if (isReady) {
-      await _timerSubscription?.cancel();
-
-      _timerSubscription = _displayedStream.listen((event) {
-        onTimerFinished?.call();
-        stop();
-      });
-    }
     'Timer set $timerDate'.log();
   }
 
-  Future<bool> _checkIfTimerAlreadySet() async {
+  static Future<bool> _checkIfTimerAlreadySet() async {
     final allNotifications = await _notifications.listScheduledNotifications();
     final timerNotification = allNotifications.firstWhereOrNull((element) => element.content?.id == _timerId);
     return timerNotification != null;
   }
 
-  Future<Duration> remainingTime() async {
+  static Future<Duration> remainingTime() async {
     final allNotifications = await _notifications.listScheduledNotifications();
     final timerNotification = allNotifications.firstWhereOrNull((element) => element.content?.id == _timerId);
     if (timerNotification == null) return Duration.zero..log();
@@ -114,7 +115,7 @@ class SleepTimerManager {
     return notificationTime.difference(DateTime.now())..log();
   }
 
-  Future<DateTime?> notificationDateTime() async {
+  static Future<DateTime?> notificationDateTime() async {
     final allNotifications = await _notifications.listScheduledNotifications();
     final timerNotification = allNotifications.firstWhereOrNull((element) => element.content?.id == _timerId);
     if (timerNotification == null) return null;
@@ -131,10 +132,7 @@ class SleepTimerManager {
     return notificationTime;
   }
 
-  Future<void> stop() async {
-    await _timerSubscription?.cancel();
-
-    _timerSubscription = null;
+  static Future<void> stop() async {
     await _notifications.cancel(_timerId);
   }
 }

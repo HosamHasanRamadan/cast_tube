@@ -3,7 +3,9 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  awesome_notifications
   isar_flutter_libs
+  sentry_flutter
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST

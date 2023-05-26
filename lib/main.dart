@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cast_tube/dialogs/sleep_timer_picker.dart';
+import 'package:cast_tube/env.dart';
 import 'package:cast_tube/extensions/extensions.dart';
 import 'package:cast_tube/init_app.dart';
 import 'package:cast_tube/models/youtube_track_details.dart';
@@ -13,17 +14,26 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:isar/isar.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:just_audio_background/just_audio_background.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 import 'package:youtube_parser/youtube_parser.dart';
 
 void main() async {
-  await initApp();
-
-  runApp(
-    UncontrolledProviderScope(
-      container: DepsContainer.rootContainer,
-      child: const MyApp(),
-    ),
+  await SentryFlutter.init(
+    (options) {
+      options.dsn = Env.sentryDsn;
+      // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
+      // We recommend adjusting this value in production.
+    },
+    appRunner: () async {
+      await initApp();
+      runApp(
+        UncontrolledProviderScope(
+          container: DepsContainer.rootContainer,
+          child: const MyApp(),
+        ),
+      );
+    },
   );
 }
 
@@ -60,7 +70,7 @@ class _MyHomePageState extends ConsumerState<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    ref.listenOnce<AsyncValue<String?>>(
+    ref.listenManual<AsyncValue<String?>>(
       receiveIntentProvider,
       (previous, next) {
         final value = next.valueOrNull;
@@ -365,15 +375,18 @@ class YouTubePlayer {
     final video = await _youtube.videos.get(newVideoUrl);
 
     final audioUrl = streams.audioOnly.first.url;
-    final newTrack = YoutubeTrackDetails()
-      ..trackId = trackId
-      ..audioStreamUrl = audioUrl
-      ..thumbnailUrl = video.thumbnails.mediumResUrl.url
-      ..title = video.title
-      ..url = newVideoUrl.url
-      ..duration = video.duration;
-    _db.writeTxn((isar) async {
-      await isar.youtubeTrackDetailss.put(newTrack);
+    final newTrack = YoutubeTrackDetails(
+      createdAt: DateTime.now(),
+      trackId: trackId,
+      audioStreamUrl: audioUrl.toString(),
+      thumbnailUrl: video.thumbnails.mediumResUrl.url.toString(),
+      title: video.title,
+      url: newVideoUrl.url.toString(),
+      duration: video.duration?.inSeconds,
+    );
+
+    _db.writeTxn(() async {
+      await _db.youtubeTrackDetails.put(newTrack);
     });
   }
 
@@ -383,11 +396,11 @@ class YouTubePlayer {
     try {
       _audioPlayer.stop();
       _audioPlayer.setAudioSource(
-        AudioSource.uri(track.audioStreamUrl,
+        AudioSource.uri(track.audioStreamUrl.url,
             tag: MediaItem(
               id: track.url.toString(),
               title: track.title,
-              artUri: track.thumbnailUrl,
+              artUri: track.thumbnailUrl.url,
             )),
       );
       selectedTrack.state = track.copyWith();
@@ -400,17 +413,17 @@ class YouTubePlayer {
       final newVideo = await _youtube.videos.streams.getManifest(track.url);
       final audio = newVideo.audioOnly.first;
 
-      final updatedTrack = track.copyWith(audioStreamUrl: audio.url);
-      _db.writeTxn((isar) async {
-        await isar.youtubeTrackDetailss.put(updatedTrack);
+      final updatedTrack = track.copyWith(audioStreamUrl: audio.url.toString());
+      _db.writeTxn(() async {
+        await _db.youtubeTrackDetails.put(updatedTrack);
       });
       await _audioPlayer.stop();
       _audioPlayer.setAudioSource(
-        AudioSource.uri(updatedTrack.audioStreamUrl,
+        AudioSource.uri(updatedTrack.audioStreamUrl.url,
             tag: MediaItem(
               id: updatedTrack.url.toString(),
               title: updatedTrack.title,
-              artUri: updatedTrack.thumbnailUrl,
+              artUri: updatedTrack.thumbnailUrl.url,
             )),
       );
       selectedTrack.state = track.copyWith();
